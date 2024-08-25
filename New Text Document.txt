@@ -1,0 +1,36 @@
+Definition for DevOps:-
+--------------------------
+
+DevOps is all about improving deliver of the software by focusing on code quality, 
+continuous monitoring, and testing. 
+It's a culture that brings together development, operations and other teams to work closely and more efficiently. 
+By fostering collaboration and integrating process, 
+DevOps aims to streamline the software development lifecycle for better efficiency and overall quality.
+
+DevOps: A culture to improve organizations delivery by 
+1. Automation
+2. Quality assurance
+3. Monitoring
+4. Testing
+
+
+Software Development Lifecycle (SDLC):-
+----------------------------------------
+
+Building(Developing)  -->  Testing --> Deployment
+
+Planning(Requirements) --> Defining (Document) --> Designing  --> Building --> Testing --> Deploy
+
+
+Virtual Machines (VM) :-
+------------------------
+What is a Server ?
+What is a VM ?
+What is a Hypervisor ?
+Difference between Physical and Virtual Machine ?
+Advantages of Virtual Machines
+
+--> Efficiency
+--> One Server Logical separation into multiple VMs Using Hypervisor
+
+--> EC2 (VM)
