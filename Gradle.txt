@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Update the package list
+sudo apt update
+
+# Install required dependencies
+sudo apt install -y wget unzip
+
+# Download Gradle 8.10
+wget https://services.gradle.org/distributions/gradle-8.10-bin.zip
+
+# Unzip the downloaded file
+unzip gradle-8.10-bin.zip
+
+# Move Gradle to /opt directory
+sudo mv gradle-8.10 /opt/gradle
+
+# Set up environment variables
+echo 'export GRADLE_HOME=/opt/gradle' | sudo tee /etc/profile.d/gradle.sh
+echo 'export PATH=$PATH:$GRADLE_HOME/bin' | sudo tee -a /etc/profile.d/gradle.sh
+
+# Apply the changes to the current session
+source /etc/profile.d/gradle.sh
+
+# Verify the installation
+gradle -v
+
+
+
+***************************
+
+>>nano install_gradle.sh
+>>chmod +x install_gradle.sh
+>>./install_gradle.sh
+
+
+>>ls /opt/gradle/bin
+gradle  gradle.bat
+ubuntu@ip-172-31-26-140:~$ export GRADLE_HOME=/opt/gradle
+ubuntu@ip-172-31-26-140:~$ export PATH=$PATH:$GRADLE_HOME/bin
+ubuntu@ip-172-31-26-140:~$ gradle -v

@@ -1,0 +1,11 @@
+If ls not working --> export PATH=$PATH:/usr/bin:/bin
+
+>>ls --list of files and folders
+
+>> cd folder --change directory
+
+>> cd .. --changing directory back
+
+>> echo $JAVA_HOME --java path
+
+>> java --version
