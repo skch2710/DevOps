@@ -18,3 +18,9 @@ sudo apt-get update
 
 
 >>sudo apt-get install openjdk-21-jdk openjdk-21-jre
+
+
+>> docker run -d --name sonarqube -p 9000:9000 sonarqube:lts-community
+	admin -- admin
+	Update Password -- Sonar@123
+
