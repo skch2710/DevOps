@@ -1,0 +1,109 @@
+
+
+	MiniKube on Ubuntu :
+	---------------------
+>>sudo apt update
+>>sudo apt update -y
+
+>> mkdir mini-kube
+>> nano install_minikube.sh
+
+#!/bin/bash
+
+# Exit on any error
+set -e
+
+# Update and install dependencies
+echo "Updating system and installing dependencies..."
+sudo apt-get update -y
+sudo apt-get install -y curl wget apt-transport-https ca-certificates software-properties-common conntrack
+
+# Install Docker if not already installed
+if ! command -v docker &> /dev/null; then
+  echo "Installing Docker..."
+  sudo apt-get install -y docker.io
+  sudo systemctl enable --now docker
+  sudo usermod -aG docker $USER
+  echo "Docker installed. Please log out and log back in to apply group changes."
+fi
+
+# Install Minikube
+echo "Downloading Minikube..."
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+chmod +x minikube
+sudo mv minikube /usr/local/bin/
+
+# Verify Minikube installation
+if command -v minikube &> /dev/null; then
+  echo "Minikube installed successfully!"
+else
+  echo "Minikube installation failed!"
+  exit 1
+fi
+
+# Install Kubectl
+echo "Installing kubectl..."
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x kubectl
+sudo mv kubectl /usr/local/bin/
+
+# Verify kubectl installation
+if command -v kubectl &> /dev/null; then
+  echo "Kubectl installed successfully!"
+else
+  echo "Kubectl installation failed!"
+  exit 1
+fi
+
+# Start Minikube without root privileges
+echo "Starting Minikube without root privileges..."
+if ! groups | grep -q "\bdocker\b"; then
+  echo "Adding $USER to the docker group..."
+  sudo usermod -aG docker $USER
+  echo "Please log out and log back in to apply group changes."
+  exit 0
+fi
+
+# Switch to the current user and start Minikube
+su - $USER -c 'minikube start --driver=docker'
+
+# Print Minikube status
+su - $USER -c 'minikube status'
+
+echo "Minikube installation and setup completed!"
+
+
+>> CTRL + X and Y and Enter
+>>sudo ./install_minikube.sh
+
+>> exit
+
+>> minikube start --driver=docker
+
+>> minikube status
+
+>>kubectl get nodes
+
+>> kubectl get svc
+
+>> minikube ip
+
+>> kubectl get pods
+>>kubectl describe pod hello-minikube-5f7f6dc576-ftx4q
+>>kubectl describe svc hello-minikube
+
+>>kubectl logs hello-minikube-5f7f6dc576-ftx4q
+
+>>kubectl create deployment hello-minikube --image=nginx
+>>kubectl expose deployment hello-minikube --type=NodePort --port=8080
+
+>>kubectl delete service hello-node
+>>kubectl delete deployment hello-node
+>>kubectl delete svc postgres-service
+
+>>kubectl port-forward pod/hello-minikube-5f7f6dc576-ftx4q 8080:80
+
+>> minikube stop
+>> minikube start
+
+>> eval $(minikube -p minikube docker-env)

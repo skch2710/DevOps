@@ -24,3 +24,10 @@ sudo apt-get update
 	admin -- admin
 	Update Password -- Sonar@123
 
+>> docker run -d --privileged --restart=unless-stopped \
+  -p 80:80 -p 443:443 \
+  --name rancher \
+  rancher/rancher:latest
+
+
+

@@ -1,0 +1,74 @@
+docker run -d --privileged --restart=unless-stopped \
+  -p 80:80 -p 443:443 \
+  --name rancher \
+  rancher/rancher:latest
+
+
+For Rancher Installation
+
+Sathish@2710
+
+
+Docker CMD:
+--------------
+>>Docker images 
+>>Docker ps
+>>Docker ps -a
+>>Docker rm <containerId1> <containerId2> ....
+>>Docker image rm <imageId1>
+>>docker image rm -f azp-agent:linux
+>>docker stop <containerId1> <containerId2> ....
+>>docker start <containerId1>
+>>docker logs <containerId>
+#On Image #CTRL+D exit from Bash
+>>docker run -it --rm openjdk:21 /bin/bash 
+#On Container 
+>>docker exec -it 312a8d92ea29 bash 
+
+>>>> docker build -t vite-react-app:latest .
+
+
+/***********/
+
+>>nano Dockerfile
+	
+FROM ubuntu:22.04
+
+RUN apt update -y && apt upgrade -y && apt install curl git jq libicu70 maven -y
+
+# Also can be "linux-arm", "linux-arm64".
+ENV TARGETARCH="linux-x64"
+
+WORKDIR /azp/
+
+COPY ./start.sh ./
+RUN chmod +x ./start.sh
+
+# Create agent user and set up home directory
+RUN useradd -m -d /home/agent agent
+RUN chown -R agent:agent /azp /home/agent
+
+USER agent
+# Another option is to run the agent as root.
+# ENV AGENT_ALLOW_RUNASROOT="true"
+
+ENTRYPOINT ./start.sh
+
+	
+>>nano start.sh
+
+sudo docker build --tag "azp-agent:linux" --file Dockerfile .
+
+sudo docker run -e AZP_URL="https://dev.azure.com/skch2710" -e AZP_TOKEN="BqWsiulUthYHamZEBzaKMRxOckQHkY1rvS4m9RlraHmLWlvzsVifJQQJ99ALACAAAAAAAAAAAAASAZDOYg5Q" -e AZP_POOL=Docker_Pool -e AZP_AGENT_NAME="DockerBuildAgent" --name "azp-agent" azp-agent:linux
+
+sudo docker run -d -e AZP_URL="https://dev.azure.com/skch2710" -e AZP_TOKEN="BqWsiulUthYHamZEBzaKMRxOckQHkY1rvS4m9RlraHmLWlvzsVifJQQJ99ALACAAAAAAAAAAAAASAZDOYg5Q" -e AZP_POOL=Docker_Pool -e AZP_AGENT_NAME="DockerBuildAgent" --name "azp-agent" azp-agent:linux
+
+
+docker run -it \
+  -e AZP_URL="https://dev.azure.com/skch2710" \
+  -e AZP_TOKEN="BqWsiulUthYHamZEBzaKMRxOckQHkY1rvS4m9RlraHmLWlvzsVifJQQJ99ALACAAAAAAAAAAAAASAZDOYg5Q" \
+  b9b4696bfe6f bash
+
+
+
+JDBC_CONNECTION_STRING=jdbc:postgresql://172.20.70.149:9001/sample DB_USERNAME=postgres DB_PASSWORD=Sathish123 java -jar skch-outh2-server-1.0.jar

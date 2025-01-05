@@ -1,0 +1,83 @@
+****** Postgres in Kubernetis **********
+
+>> nano postgres-deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+  labels:
+    app: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:latest
+        env:
+        - name: POSTGRES_USER
+          value: "postgres"
+        - name: POSTGRES_PASSWORD
+          value: "Sathish123"
+        - name: POSTGRES_DB
+          value: "mydatabase"
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: postgres-data
+        persistentVolumeClaim:
+          claimName: postgres-pvc
+
+
+
+>> nano postgres-pvc.yaml
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+
+>> nano postgres-service.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    app: postgres
+
+
+>>kubectl apply -f postgres-pvc.yaml
+>>kubectl apply -f postgres-deployment.yaml
+>>kubectl apply -f postgres-service.yaml
+
+>>kubectl port-forward svc/postgres-service 9001:5432 &
+
+
+
+*************
+127.0.0.1
+9001
+postgres
+Sathish123
+
