@@ -76,17 +76,19 @@ services:
     ports:
       - "9021:9021"
     environment:
+      # ---- REQUIRED (Next-Gen CC) ----
       CONTROL_CENTER_BOOTSTRAP_SERVERS: kafka:9092
+      CONTROL_CENTER_REPLICATION_FACTOR: 1
 
-      # Optional integrations
+      # ---- Optional integrations ----
       SCHEMA_REGISTRY_URL: http://schema-registry:8081
       KAFKA_CONNECT_URL: http://kafka-connect:8083
 
-      # Server
+      # ---- Server ----
       SERVER_PORT: 9021
       SERVER_HOST: 0.0.0.0
 
-      # Dev mode (single broker friendly)
+      # ---- Dev / single broker ----
       CONTROL_CENTER_MODE: development
 
 volumes:
