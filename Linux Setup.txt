@@ -115,6 +115,7 @@ docker run hello-world
 
 ---
 
+Kafka 8.1 (KRaft) + Schema Registry + Kafka Connect + Control Center.
 
 >>> docker compose -f docker-compose-kafka.yml up -d
 
