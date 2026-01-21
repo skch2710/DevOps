@@ -116,6 +116,7 @@ docker run hello-world
 ---
 
 Kafka 8.1 (KRaft) + Schema Registry + Kafka Connect + Control Center.
+Kafka handles messaging, Schema Registry manages schemas, Kafka Connect moves data, and Control Center provides the web UI.
 
 >>> docker compose -f docker-compose-kafka.yml up -d
 
