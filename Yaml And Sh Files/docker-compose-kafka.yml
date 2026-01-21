@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   kafka:
-    image: confluentinc/cp-kafka:8.0.3
+    image: confluentinc/cp-kafka:8.1.0
     container_name: kafka
     hostname: kafka
     ports:
