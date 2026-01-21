@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   kafka:
-    image: confluentinc/cp-kafka:8.1.0
+    image: confluentinc/cp-kafka:8.0.3
     container_name: kafka
     hostname: kafka
     ports:
@@ -33,7 +33,7 @@ services:
       - kafka-data:/var/lib/kafka/data
 
   schema-registry:
-    image: confluentinc/cp-schema-registry:8.1.0
+    image: confluentinc/cp-schema-registry:8.0.3
     container_name: schema-registry
     depends_on:
       - kafka
@@ -45,7 +45,7 @@ services:
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka:9092
 
   kafka-connect:
-    image: confluentinc/cp-kafka-connect:8.1.0
+    image: confluentinc/cp-kafka-connect:8.0.3
     container_name: kafka-connect
     depends_on:
       - kafka
@@ -69,7 +69,7 @@ services:
       CONNECT_PLUGIN_PATH: /usr/share/java
 
   control-center:
-    image: confluentinc/cp-enterprise-control-center:8.0.0
+    image: confluentinc/cp-enterprise-control-center:7.8.6
     container_name: control-center
     depends_on:
       - kafka
