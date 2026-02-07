@@ -4,9 +4,4 @@ RUN apt-get update && \
     apt-get install -y pgagent && \
     rm -rf /var/lib/apt/lists/*
 
-CMD bash -c "
-echo 'Waiting for PostgreSQL...' &&
-sleep 10 &&
-pgagent host=postgres dbname=mydatabase user=postgres
-"
-
+CMD ["bash", "-c", "echo 'Waiting for PostgreSQL...' && sleep 10 && pgagent host=postgres dbname=mydatabase user=postgres"]
