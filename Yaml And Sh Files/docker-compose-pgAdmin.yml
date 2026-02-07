@@ -17,19 +17,14 @@ services:
       - postgres_network
 
   pgagent:
-    image: postgres:17
+    build:
+      context: .
+      dockerfile: Dockerfile.pgagent
     container_name: utxsathish-pgagent
     depends_on:
       - postgres
     environment:
-      PGPASSWORD: Sathish@123
-    entrypoint: >
-      bash -c "
-      apt-get update &&
-      apt-get install -y pgagent &&
-      sleep 10 &&
-      exec pgagent host=postgres dbname=mydatabase user=postgres password=Sathish@123
-      "
+      PGPASSWORD: "Sathish@123"
     networks:
       - postgres_network
 
