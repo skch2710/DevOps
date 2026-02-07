@@ -28,7 +28,7 @@ services:
       apt-get update &&
       apt-get install -y pgagent &&
       sleep 10 &&
-      pgagent host=postgres dbname=mydatabase user=postgres password=Sathish@123
+      exec pgagent host=postgres dbname=mydatabase user=postgres password=Sathish@123
       "
     networks:
       - postgres_network
