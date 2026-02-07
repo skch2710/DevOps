@@ -1,9 +1,7 @@
-version: "3.8"
-
 services:
 
   postgres:
-    image: postgres:18
+    image: postgres:17
     container_name: utxsathish-postgres
     hostname: utxsathish
     environment:
@@ -14,12 +12,12 @@ services:
     ports:
       - "9001:5432"
     volumes:
-      - pgdata:/var/lib/postgresql
+      - postgres_data:/var/lib/postgresql/data
     networks:
       - postgres_network
 
   pgagent:
-    image: postgres:18
+    image: postgres:17
     container_name: utxsathish-pgagent
     depends_on:
       - postgres
