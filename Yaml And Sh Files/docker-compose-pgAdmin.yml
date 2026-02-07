@@ -8,25 +8,21 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: Sathish@123
       POSTGRES_DB: mydatabase
-    command: postgres -c work_mem=16MB
     ports:
       - "9001:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - postgres_network
-
-  pgagent:
-    build:
-      context: .
-      dockerfile: Dockerfile.pgagent
-    container_name: utxsathish-pgagent
-    depends_on:
-      - postgres
-    environment:
-      PGPASSWORD: "Sathish@123"
-    networks:
-      - postgres_network
+    command: >
+      bash -c "
+      apt-get update &&
+      apt-get install -y pgagent &&
+      postgres -c work_mem=16MB &
+      sleep 10 &&
+      pgagent host=localhost dbname=mydatabase user=postgres &
+      wait
+      "
 
 volumes:
   postgres_data:
