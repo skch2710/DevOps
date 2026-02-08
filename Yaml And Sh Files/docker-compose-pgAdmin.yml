@@ -14,6 +14,7 @@ services:
     networks:
       - postgres_network
     command: postgres -c work_mem=16MB
+    restart: unless-stopped
 
   pgagent:
     build:
@@ -24,8 +25,13 @@ services:
       - postgres
     networks:
       - postgres_network
+    restart: unless-stopped
     command: >
-      pgagent host=postgres dbname=mydatabase user=postgres password=Sathish@123
+      bash -c "
+      echo 'Waiting for postgres...' &&
+      sleep 10 &&
+      pgagent -f host=postgres dbname=mydatabase user=postgres password=Sathish@123
+      "
 
 volumes:
   postgres_data:
