@@ -3,7 +3,6 @@ services:
   postgres:
     image: postgres:17
     container_name: utxsathish-postgres
-    hostname: utxsathish
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: Sathish@123
@@ -14,14 +13,20 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - postgres_network
-    command: >
-      bash -c "
-      apt-get update &&
-      apt-get install -y pgagent &&
-      postgres -c work_mem=16MB &
-      sleep 10 &&
-      pgagent host=localhost dbname=mydatabase user=postgres &
-      wait
+    command: postgres -c work_mem=16MB
+
+  pgagent:
+    image: dpage/pgadmin4:latest
+    container_name: utxsathish-pgagent
+    depends_on:
+      - postgres
+    networks:
+      - postgres_network
+    entrypoint: >
+      /bin/sh -c "
+      apt update &&
+      apt install -y pgagent &&
+      pgagent host=postgres dbname=mydatabase user=postgres password=Sathish@123
       "
 
 volumes:
