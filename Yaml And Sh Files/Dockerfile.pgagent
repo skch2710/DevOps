@@ -1,12 +1,5 @@
 FROM postgres:17
 
 RUN apt-get update && \
-    apt-get install -y pgagent postgresql-client && \
+    apt-get install -y pgagent && \
     rm -rf /var/lib/apt/lists/*
-
-CMD ["bash", "-c", "\
-echo 'Waiting for PostgreSQL...'; \
-until pg_isready -h postgres -U postgres; do sleep 2; done; \
-echo 'PostgreSQL ready — starting pgAgent'; \
-pgagent host=postgres dbname=mydatabase user=postgres \
-"]

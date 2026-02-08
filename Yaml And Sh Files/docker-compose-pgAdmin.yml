@@ -16,18 +16,16 @@ services:
     command: postgres -c work_mem=16MB
 
   pgagent:
-    image: dpage/pgadmin4:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.pgagent
     container_name: utxsathish-pgagent
     depends_on:
       - postgres
     networks:
       - postgres_network
-    entrypoint: >
-      /bin/sh -c "
-      apt update &&
-      apt install -y pgagent &&
+    command: >
       pgagent host=postgres dbname=mydatabase user=postgres password=Sathish@123
-      "
 
 volumes:
   postgres_data:
