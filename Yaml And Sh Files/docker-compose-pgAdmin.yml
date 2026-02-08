@@ -1,8 +1,11 @@
+version: "3.9"
 
 services:
 
   postgres:
-    image: postgres:17
+    build:
+      context: .
+      dockerfile: Dockerfile.postgres
     container_name: utxsathish-postgres
     environment:
       POSTGRES_USER: postgres
@@ -14,7 +17,6 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - postgres_network
-    command: postgres -c work_mem=16MB
     restart: unless-stopped
 
   pgagent:
@@ -29,11 +31,7 @@ services:
     restart: unless-stopped
     command: >
       bash -c "
-      echo 'Waiting for Postgres readiness...' &&
-      until pg_isready -h postgres -U postgres; do
-        sleep 2;
-      done &&
-      echo 'Postgres ready — starting pgAgent...' &&
+      until pg_isready -h postgres -U postgres; do sleep 2; done &&
       pgagent -f host=postgres dbname=mydatabase user=postgres password=Sathish@123
       "
 
