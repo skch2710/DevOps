@@ -11,6 +11,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: Sathish@123
       POSTGRES_DB: mydatabase
+      TZ: Asia/Kolkata
     ports:
       - "9001:5432"
     volumes:
@@ -18,6 +19,10 @@ services:
     networks:
       - postgres_network
     restart: unless-stopped
+    command: >
+      postgres
+      -c work_mem=16MB
+      -c timezone=Asia/Kolkata
 
   pgagent:
     build:
@@ -32,7 +37,7 @@ services:
     command: >
       bash -c "
       until pg_isready -h postgres -U postgres; do sleep 2; done &&
-      pgagent -f host=postgres dbname=postgres user=postgres password=Sathish@123
+      pgagent -f 'host=postgres dbname=postgres user=postgres password=Sathish@123'
       "
 
 volumes:
