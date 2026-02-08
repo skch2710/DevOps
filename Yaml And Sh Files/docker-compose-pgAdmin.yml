@@ -32,7 +32,7 @@ services:
     command: >
       bash -c "
       until pg_isready -h postgres -U postgres; do sleep 2; done &&
-      pgagent -f host=postgres dbname=mydatabase user=postgres password=Sathish@123
+      pgagent -f host=postgres dbname=postgres user=postgres password=Sathish@123
       "
 
 volumes:
